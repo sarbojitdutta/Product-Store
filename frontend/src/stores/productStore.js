@@ -29,9 +29,10 @@ export const useProductStore = create((set, get) => ({
             await get().fetchProducts()
             get().resetForm()
             toast.success("Product added successfully")
+            document.getElementById("add_product_modal").close();
         } catch (error) {
-            console.log("Error in addProduct function", error);
-            toast.error("Something went wrong");
+            console.log("Error in addProduct function", error)
+            toast.error("Something went wrong")
         } finally {
             set({ loading: false })
         }
@@ -94,3 +95,4 @@ export const useProductStore = create((set, get) => ({
         }
     },
 }))
+
