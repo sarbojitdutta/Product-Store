@@ -5,6 +5,7 @@ import cors from "cors"
 import dotenv from "dotenv"
 import productRoute from "./routes/productRoute.js"
 import { sql } from "./configs/db.js"
+import { aj } from "./lib/arcjet.js"
 
 dotenv.config()
 
@@ -56,7 +57,7 @@ app.use(async (req, res, next) => {
         next(error)
     }
 })
-app.use("/api/routes", productRoute)
+app.use("/api/products", productRoute)
 
 async function initDB() {
     try {
@@ -66,8 +67,7 @@ async function initDB() {
             name VARCHAR(255) NOT NULL,
             price DECIMAL(10,2) NOT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            image VARCHAR(255) NOT NULL,
-            description VARCHAR(255) NOT NULL
+            image VARCHAR(255) NOT NULL
         )
         `
 
