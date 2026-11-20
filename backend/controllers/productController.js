@@ -38,24 +38,29 @@ export const getProduct = async (req, res) => {
     }
 }
 export const updateProduct = async (req, res) => {
-    try {
-        const updated = await sql`
-        UPDATE products 
-        SET name = ${req.body.name}, 
-        price = ${req.body.price}, 
-        image = ${req.body.image}, 
-        WHERE id = ${req.params.id}
-        RETURNING *`
+    const { id } = req.params;
+  const { name, price, image } = req.body;
 
-        if (updated.length === 0) {
-            return res.status(404).json({ success: false, message: "Product not found" })
-        }
+  try {
+    const updateProduct = await sql`
+      UPDATE products
+      SET name=${name}, price=${price}, image=${image}
+      WHERE id=${id}
+      RETURNING *
+    `;
 
-        res.status(200).json({ success: true, data: updated })
-    } catch (error) {
-        console.log("Error in updateProduct", error)
-        res.status(500).json({ success: false, error: error.message })
+    if (updateProduct.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Product not found",
+      });
     }
+
+    res.status(200).json({ success: true, data: updateProduct[0] });
+  } catch (error) {
+    console.log("Error in updateProduct function", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
 }
 
 export const deleteProduct = async (req, res) => {
