@@ -1,5 +1,6 @@
-import { Link, EditIcon, Trash2Icon } from "lucide-react"
+import { EditIcon, Trash2Icon } from "lucide-react"
 import { useProductStore } from "../stores/productStore"
+import { Link } from "react-router-dom"
 const ProductCard = ({ product }) => {
 
     const { deleteProduct } = useProductStore()
