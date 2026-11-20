@@ -31,7 +31,8 @@ export const createProduct = async (req, res) => {
 export const getProduct = async (req, res) => {
     try {
         const product = await sql` SELECT * FROM products WHERE id = ${req.params.id}`
-        res.status(200).json({ success: true, data: product })
+        res.status(200).json({ success: true, data: product[0] })
+        // console.log(product)
     } catch (error) {
         console.log("Error in getProduct", error)
         res.status(500).json({ success: false, error: error.message })
